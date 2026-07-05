@@ -2,6 +2,7 @@ package com.TaskManagement.Application.Model;
 
 import com.TaskManagement.Application.Enemurate.TaskPriorite;
 import com.TaskManagement.Application.Enemurate.TaskStatus;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -29,5 +30,6 @@ public class Task {
     @Enumerated(EnumType.STRING)
     private TaskPriorite priorite=TaskPriorite.LOW;
     @CreationTimestamp
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
 }
