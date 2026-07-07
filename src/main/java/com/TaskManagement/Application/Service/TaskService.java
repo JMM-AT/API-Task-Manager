@@ -4,7 +4,7 @@ import com.TaskManagement.Application.Exception.TaskNotFoundException;
 import com.TaskManagement.Application.Model.Task;
 import com.TaskManagement.Application.Repository.TaskRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -47,4 +47,5 @@ public class TaskService {
 
         return "Task deleted successfully";
     }
+
 }

@@ -4,10 +4,10 @@ import com.TaskManagement.Application.Enemurate.TaskPriorite;
 import com.TaskManagement.Application.Enemurate.TaskStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
-import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDateTime;
 
@@ -32,4 +32,7 @@ public class Task {
     @CreationTimestamp
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
+    @ManyToOne
+    @JoinColumn(name = "owner_id", nullable = false)
+    private Users owner;
 }
