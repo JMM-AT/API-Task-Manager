@@ -2,6 +2,7 @@ package com.TaskManagement.Application.Model;
 
 import com.TaskManagement.Application.Enemurate.TaskPriorite;
 import com.TaskManagement.Application.Enemurate.TaskStatus;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -35,4 +36,8 @@ public class Task {
     @ManyToOne
     @JoinColumn(name = "owner_id", nullable = false)
     private Users owner;
+    @ManyToOne
+    @JoinColumn(name = "projet_id")
+    @JsonBackReference
+    private Projet projet;
 }
