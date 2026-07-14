@@ -68,7 +68,7 @@ public class TaskService {
         verifyTaskOwnership(updatedTask);
 
         updatedTask.setTitle(task.getTitle());
-        updatedTask.setStatus(task.getStatus());
+        //updatedTask.setStatus(task.getStatus());
         updatedTask.setDescription(task.getDescription());
         updatedTask.setPriorite(task.getPriorite());
         return taskRepo.save(updatedTask);

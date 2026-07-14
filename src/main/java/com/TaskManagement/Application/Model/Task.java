@@ -26,8 +26,7 @@ public class Task {
     private String description;
 
     @Enumerated(EnumType.STRING)
-    private TaskStatus status=TaskStatus.TODO;
-
+    private TaskStatus status = TaskStatus.TODO;
     @Enumerated(EnumType.STRING)
     private TaskPriorite priorite=TaskPriorite.LOW;
     @CreationTimestamp
