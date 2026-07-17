@@ -2,16 +2,17 @@ package com.TaskManagement.Application.Controller;
 
 import com.TaskManagement.Application.DTO.TaskRequestDto;
 import com.TaskManagement.Application.DTO.TaskResponseDto;
+import com.TaskManagement.Application.Enemurate.TaskPriorite;
+import com.TaskManagement.Application.Enemurate.TaskStatus;
 import com.TaskManagement.Application.Model.Task;
 import com.TaskManagement.Application.Service.TaskService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 @RestController
@@ -20,13 +21,13 @@ public class CrudTaskController {
     TaskService taskService;
 
     @GetMapping("/project/{id}/tasks")
-    public ResponseEntity<List<TaskResponseDto>> getAllTasks(@PathVariable Integer id){
-        List<TaskResponseDto> dtoList=new ArrayList<>();
-        List<Task> taskList=taskService.getAllTasks(id);
-        taskList.forEach(
-                task -> dtoList.add(TaskResponseDto.fromEntity(task))
-        );
-        return ResponseEntity.ok(dtoList);
+    public ResponseEntity<Page<TaskResponseDto>> getAllTasks(@PathVariable Integer id, Pageable pageable, @RequestParam(required = false) TaskStatus status, @RequestParam(required = false) TaskPriorite priorite){
+
+        Page<TaskResponseDto> taskList=taskService.getAllTasks(id,status,priorite,pageable)
+                .map(TaskResponseDto::fromEntity)
+                ;
+
+        return ResponseEntity.ok(taskList);
     }
     @GetMapping("/task/{id}")
     public ResponseEntity<TaskResponseDto> getTaskById(@PathVariable Integer id){

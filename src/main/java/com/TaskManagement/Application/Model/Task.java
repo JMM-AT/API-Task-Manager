@@ -37,6 +37,6 @@ public class Task {
     private Users owner;
     @ManyToOne
     @JoinColumn(name = "projet_id")
-    @JsonBackReference
+    
     private Projet projet;
 }

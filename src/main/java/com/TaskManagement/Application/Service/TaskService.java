@@ -1,5 +1,7 @@
 package com.TaskManagement.Application.Service;
 
+import com.TaskManagement.Application.Enemurate.TaskPriorite;
+import com.TaskManagement.Application.Enemurate.TaskStatus;
 import com.TaskManagement.Application.Exception.ProjectNotFoundException;
 import com.TaskManagement.Application.Exception.TaskNotFoundException;
 import com.TaskManagement.Application.Exception.UnauthorizedAccessException;
@@ -9,13 +11,15 @@ import com.TaskManagement.Application.Model.Users;
 import com.TaskManagement.Application.Repository.ProjectRepo;
 import com.TaskManagement.Application.Repository.TaskRepo;
 import com.TaskManagement.Application.Repository.UserRepo;
+import com.TaskManagement.Application.Specification.TaskSpecs;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class TaskService {
@@ -28,7 +32,7 @@ public class TaskService {
     @Autowired
     private UserRepo userRepo;
 
-    public List<Task> getAllTasks(Integer id) {
+    public Page<Task> getAllTasks(Integer id,  TaskStatus status, TaskPriorite priorite,Pageable pageable) {
 
         //String userName=SecurityContextHolder.getContext().getAuthentication().getName();
         //return taskRepo.findByOwnerUsername(userName);
@@ -36,8 +40,10 @@ public class TaskService {
                 ()->new ProjectNotFoundException(id)
         );
         prServ.verifyOwnership(pr,"Only the project owner can see this project.");
-
-        return pr.getTask();
+        Specification <Task> spec=Specification.where(TaskSpecs.hasProjetId(id))
+                .and(TaskSpecs.hasPriorite(priorite))
+                .and(TaskSpecs.hasStatus(status));
+        return taskRepo.findAll(spec,pageable);
     }
 
     public Task getTaskById(Integer id) {
