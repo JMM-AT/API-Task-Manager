@@ -2,6 +2,7 @@ package com.TaskManagement.Application.Controller;
 
 import com.TaskManagement.Application.DTO.LoginRequest;
 import com.TaskManagement.Application.DTO.RegisterRequest;
+import com.TaskManagement.Application.Enemurate.Role;
 import com.TaskManagement.Application.Model.Users;
 import com.TaskManagement.Application.Repository.UserRepo;
 import com.TaskManagement.Application.Service.JwtService;
@@ -11,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/auth")
+
 public class authController {
 
     @Autowired
@@ -46,6 +50,7 @@ public class authController {
         user.setUsername(request.getUsername());
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setRole(Role.Utilisateur);
         userRepo.save(user);
         return ResponseEntity.status(HttpStatus.CREATED).body("User registered");
     }

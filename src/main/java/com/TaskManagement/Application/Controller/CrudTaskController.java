@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -34,7 +35,6 @@ public class CrudTaskController {
         Task task=taskService.getTaskById(id);
         return ResponseEntity.ok(TaskResponseDto.fromEntity( task));
     }
-
     @PostMapping("/project/{id}/task")
     public ResponseEntity<TaskResponseDto> creatTask(@Valid @RequestBody TaskRequestDto dto, @PathVariable Integer id){
         Task t=taskService.creatTask(TaskRequestDto.toEntity(dto),id);
@@ -46,6 +46,11 @@ public class CrudTaskController {
         Task t=taskService.updateTask(id,TaskRequestDto.toEntity(dto));
         return ResponseEntity.ok(TaskResponseDto.fromEntity(t));
     }
+//    @PreAuthorize("hasRole('Admin')")
+//    @GetMapping("/hello")
+//    public String Hello(){
+//        return "hello";
+//    }
 
     
     @DeleteMapping("/task/{id}")
